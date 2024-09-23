@@ -22,11 +22,11 @@ export default function RootLayout({
       <body>
         {' '}
         <Providers>
-          <div className='grid grid-rows-[1fr_55] w-screen h-screen'>
+          <div className='relative w-screen h-screen'>
             <div className=' h-full bg-neutral-50 overflow-scroll'>
               {children}
             </div>
-            <div className='w-full '>
+            <div className='w-screen fixed bottom-0 '>
               <FooterNav />
               <SignInModal />
               <ToastContainer />
