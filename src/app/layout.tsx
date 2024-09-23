@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
-import localFont from 'next/font/local';
+
 import './globals.css';
 import 'react-toastify/dist/ReactToastify.css';
 import FooterNav from '@/components/footer-nav/FooterNav';
-import SignInModal from '@/features/auth/components/SignInModal';
-import { ToastContainer } from 'react-toastify';
+// import SignInModal from '@/features/auth/components/SignInModal';
+// import { ToastContainer } from 'react-toastify';
 import { Providers } from '@/providers/Provider';
 
 export const metadata: Metadata = {
@@ -22,14 +22,14 @@ export default function RootLayout({
       <body>
         {' '}
         <Providers>
-          <div className='flex flex-col  h-screen'>
-            <div className='flex-grow bg-neutral-50 overflow-auto'>
+          <div className='grid grid-rows-[1fr_auto] w-screen h-screen'>
+            <div className=' h-full bg-neutral-50 overflow-scroll bg-red-300'>
               {children}
             </div>
-            <div className='absolute bottom-0 left-0 w-full'>
+            <div className='w-full bg-blue-300'>
               <FooterNav />
-              <SignInModal />
-              <ToastContainer />
+              {/* <SignInModal />
+              <ToastContainer /> */}
             </div>
           </div>
         </Providers>
