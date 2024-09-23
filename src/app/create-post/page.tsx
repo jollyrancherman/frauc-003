@@ -15,7 +15,7 @@ import { Textarea } from '@/components/ui/textarea';
 //   SelectValue,
 // } from '@/components/ui/select';
 
-import { Camera, Circle } from 'lucide-react';
+import { Circle } from 'lucide-react';
 import FileUpload from './FileUpload';
 
 const CreatePostPage = () => {

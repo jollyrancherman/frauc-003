@@ -1,7 +1,7 @@
 import { Filter, Search } from 'lucide-react';
 import SignInButton from './SignInButton';
 import { Button } from '../ui/button';
-import ManageGeolocation from '@/features/geolocation/ManageGeolocation';
+// import ManageGeolocation from '@/features/geolocation/ManageGeolocation';
 import { getUser } from '@/utils/supabase/server';
 import UserAvatar from '../avatar/Avatar';
 
@@ -10,7 +10,7 @@ const FooterNav = async () => {
 
   return (
     <>
-      <ManageGeolocation />
+      {/* <ManageGeolocation /> */}
 
       <div className='px-4 py-2 border border-t-gray-200  md:hidden bg-white'>
         <div className='flex justify-between items-center'>

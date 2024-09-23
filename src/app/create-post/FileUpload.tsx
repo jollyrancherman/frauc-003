@@ -1,6 +1,6 @@
 'use client';
 
-import { Camera, X } from 'lucide-react';
+import { Camera } from 'lucide-react';
 import React, { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import FileUploadThumb, { ThumbFile } from './FileUploadThumb';

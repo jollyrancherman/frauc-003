@@ -1,6 +1,7 @@
 'use client';
 
 import { X } from 'lucide-react';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 export type ThumbFile = File & {
@@ -20,7 +21,7 @@ const FileUploadThumb = ({ files, removePhoto }: FileUploadThumbProps) => {
     // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
     return () =>
       files.forEach((file) => URL.revokeObjectURL(file.preview || ''));
-  }, []);
+  }, [files]);
 
   useEffect(() => {
     if (files.length === 0) {
@@ -28,7 +29,7 @@ const FileUploadThumb = ({ files, removePhoto }: FileUploadThumbProps) => {
     } else if (!files.some((file) => file.id === primary?.id)) {
       setPrimary(files[0]);
     }
-  }, [files]);
+  }, [files, primary]);
 
   return (
     <aside className='grid grid-cols-4 gap-1'>
@@ -40,7 +41,8 @@ const FileUploadThumb = ({ files, removePhoto }: FileUploadThumbProps) => {
           }`}
           key={file.id}
         >
-          <img
+          <Image
+            alt='Preview'
             src={file.preview || ''}
             className='object-cover w-full h-full'
             // Revoke data uri after image is loaded

@@ -1,8 +1,9 @@
+import { Item } from '@/types/Items';
 import Image from 'next/image';
 
 import Link from 'next/link';
 
-const AuctionItem = ({ item }: { item: any }) => {
+const AuctionItem = ({ item }: { item: Item }) => {
   return (
     <Link href={`/post/${item.id}`} className='group'>
       <div className='aspect-square relative overflow-hidden rounded-sm shadow-sm object-cover'>
