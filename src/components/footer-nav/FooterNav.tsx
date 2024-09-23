@@ -12,7 +12,7 @@ const FooterNav = async () => {
     <>
       {/* <ManageGeolocation /> */}
 
-      <div className='px-4 py-2 border border-t-gray-200 bg-white'>
+      <div className='px-4 py-2 border border-t-gray-200  md:hidden bg-white'>
         <div className='flex justify-between items-center'>
           {!user ? <SignInButton /> : <UserAvatar />}
           <div className='space-x-4'>

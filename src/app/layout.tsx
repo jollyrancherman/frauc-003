@@ -3,8 +3,8 @@ import type { Metadata } from 'next';
 import './globals.css';
 import 'react-toastify/dist/ReactToastify.css';
 import FooterNav from '@/components/footer-nav/FooterNav';
-// import SignInModal from '@/features/auth/components/SignInModal';
-// import { ToastContainer } from 'react-toastify';
+import SignInModal from '@/features/auth/components/SignInModal';
+import { ToastContainer } from 'react-toastify';
 import { Providers } from '@/providers/Provider';
 
 export const metadata: Metadata = {
@@ -22,14 +22,14 @@ export default function RootLayout({
       <body>
         {' '}
         <Providers>
-          <div className='grid grid-rows-[1fr_auto] w-screen h-screen'>
-            <div className=' h-full bg-neutral-50 overflow-scroll bg-red-300'>
+          <div className='grid grid-rows-[1fr_55] w-screen h-screen'>
+            <div className=' h-full bg-neutral-50 overflow-scroll'>
               {children}
             </div>
-            <div className='w-full bg-blue-300'>
+            <div className='w-full '>
               <FooterNav />
-              {/* <SignInModal />
-              <ToastContainer /> */}
+              <SignInModal />
+              <ToastContainer />
             </div>
           </div>
         </Providers>
