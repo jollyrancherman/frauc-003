@@ -1,0 +1,150 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Users {
+  id        String  @id @default(cuid())
+  email     String  @unique
+  firstName String?
+  lastName  String?
+  bio       String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // RELATIONSHIPS
+  items   Item[]
+  ratings UserRating[]
+  tasks   Task[]
+
+  coords           Unsupported("geometry(Point, 4326)")?
+  MessagesSent     Message[]                             @relation("MessagesSent")
+  MessagesRecieved Message[]                             @relation("MessagesRecieved")
+
+  @@index([coords], name: "coords_user", type: Gist)
+}
+
+model Item {
+  id          String  @id @default(cuid())
+  title       String
+  description String
+  tradable    Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // FOREIGN KEYS
+  user   Users  @relation(fields: [userId], references: [id])
+  userId String
+
+  // RELATIONSHIPS
+  ratings  ItemRating[]
+  ItemPost ItemPost[]
+}
+
+model ItemPost {
+  id            String    @id @default(cuid())
+  startDate     DateTime?
+  endDate       DateTime?
+  startingBid   Int?
+  isBuyNow      Boolean   @default(false)
+  buyNowPrice   Int?
+  currentBid    Int?
+  currentWinner String?
+  condition     String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // FOREIGN KEYS
+  item   Item   @relation(fields: [itemId], references: [id])
+  itemId String
+
+  // RELATIONSHIPS
+  Bids     Bids[]
+  messages Message[]
+
+  coords Unsupported("geometry(Point, 4326)")?
+
+  @@index([coords], name: "item_post_coords", type: Gist)
+}
+
+model UserRating {
+  id      String  @id @default(cuid())
+  rating  Int
+  comment String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // FOREIGN KEYS
+  user   Users  @relation(fields: [userId], references: [id])
+  userId String
+}
+
+model ItemRating {
+  id      String  @id @default(cuid())
+  rating  Int
+  comment String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // FOREIGN KEYS
+  item   Item   @relation(fields: [itemId], references: [id])
+  itemId String
+}
+
+model Bids {
+  id        String @id @default(cuid())
+  bidAmount Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // FOREIGN KEYS
+  itemPost   ItemPost @relation(fields: [itemPostId], references: [id])
+  itemPostId String
+}
+
+model Task {
+  id         String   @id @default(cuid())
+  type       String
+  title      String
+  content    String
+  isComplete Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  // RELATIONSHIPS
+  user   Users  @relation(fields: [userId], references: [id])
+  userId String
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  itemPost   ItemPost @relation(fields: [itemPostId], references: [id])
+  itemPostId String
+
+  // RELATIONSHIPS
+  sender     Users  @relation("MessagesSent", fields: [senderId], references: [id])
+  senderId   String
+  receiver   Users  @relation("MessagesRecieved", fields: [receiverId], references: [id])
+  receiverId String
+}
